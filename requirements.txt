@@ -32,3 +32,4 @@ urllib3==1.24.3
 virtualenv==15.1.0
 Werkzeug==1.0.1
 wrapt==1.12.1
+twilio~=6.61.0
