@@ -2,6 +2,7 @@ from flask import Flask, request
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 import json
+import os
 
 app = Flask(__name__)
 
@@ -13,6 +14,7 @@ def hello():
 
 @app.route("/sms", methods=['POST'])
 def sms_reply():
+    api_key = os.getenv("API_KEY", "optional-default")
     msg = request.form.get('Body')
     resp = MessagingResponse()
     if msg.lower() == "hi" or msg.lower() == "hello" or msg.lower() == "hey":
@@ -22,7 +24,7 @@ def sms_reply():
         if len(array) < 2:
             array.append('USD')
         url = 'https://rest.coinapi.io/v1/exchangerate/'
-        headers = {'X-CoinAPI-Key': 'AF5B41FA-9534-4D5A-9197-8E8E588B0949'}
+        headers = {'X-CoinAPI-Key': api_key}
         url = url + array[0] + '/' + array[1]
         print(url)
         response = requests.get(url, headers=headers)
